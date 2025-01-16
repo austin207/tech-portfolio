@@ -24,7 +24,7 @@ export default function Navigation() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center text-2xl font-bold text-cyan-500">
             <Image src="/logo.svg" alt="Logo" width={40} height={40} className="mr-2" />
-            YourName
+            Antony Austin
           </Link>
           <div className="hidden md:flex space-x-8">
             {menuItems.map((item) => (
