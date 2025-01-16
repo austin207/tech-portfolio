@@ -44,7 +44,7 @@ export default function Contact() {
                   <a href="https://linkedin.com/in/antony-austin-b7287226a" className="text-gray-300 hover:text-cyan-500">
                     <Linkedin className="w-8 h-8" />
                   </a>
-                  <a href="https://instagram.com/yourusername" className="text-gray-300 hover:text-cyan-500">
+                  <a href="https://www.instagram.com/antony_.avstin?igsh=Z3NpM3NuNjl4dmU0&utm_source=qr" className="text-gray-300 hover:text-cyan-500">
                     <Instagram className="w-8 h-8" />
                   </a>
                 </div>
