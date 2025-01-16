@@ -35,7 +35,7 @@ export default function Contact() {
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="flex justify-center space-x-6">
-                  <a href="mailto:your.email@example.com" className="text-gray-300 hover:text-cyan-500">
+                  <a href="mailto:austinantony06@gmail.com" className="text-gray-300 hover:text-cyan-500">
                     <Mail className="w-8 h-8" />
                   </a>
                   <a href="https://github.com/yourusername" className="text-gray-300 hover:text-cyan-500">
