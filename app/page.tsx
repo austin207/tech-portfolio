@@ -3,7 +3,6 @@ import Projects from './components/Projects'
 import Skills from './components/Skills'
 import Contact from './components/Contact'
 import Navigation from './components/Navigation'
-import Chatbot from './components/Chatbot'
 import AboutMe from './components/AboutMe'
 import Timeline from './components/Timeline'
 import Testimonials from './components/Testimonials'
@@ -21,7 +20,6 @@ export default function Home() {
       <Projects />
       <Testimonials />
       <Contact />
-      <Chatbot />
     </main>
   )
 }
