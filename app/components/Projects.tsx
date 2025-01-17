@@ -72,7 +72,7 @@ export default function Projects() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="bg-gray-900 border-gray-700 overflow-hidden">
+              <Card className="bg-gray-900 border-gray-700 overflow-hidden rounded-lg">
                 <CardHeader className="p-0">
                   <img
                     src={project.image || "/placeholder.svg"}
@@ -85,29 +85,29 @@ export default function Projects() {
                   <p className="text-gray-400 mb-4">{project.description}</p>
                   <div className="flex flex-wrap gap-2 mb-4">
                     {project.tags.map((tag) => (
-                      <Badge key={tag} variant="secondary">
+                      <Badge key={tag} variant="secondary" className="bg-gray-700 text-gray-200">
                         {tag}
                       </Badge>
                     ))}
                   </div>
-                  <div className="flex gap-2">
-                    <Button variant="outline" size="sm" asChild>
+                  <div className="flex flex-wrap gap-2">
+                    <Button variant="outline" size="sm" asChild className="bg-gray-800 text-gray-200 hover:bg-gray-700">
                       <a href={project.github}>
                         <Github className="w-4 h-4 mr-2" />
                         Code
                       </a>
                     </Button>
-                    <Button variant="outline" size="sm" asChild>
+                    <Button variant="outline" size="sm" asChild className="bg-gray-800 text-gray-200 hover:bg-gray-700">
                       <a href={project.demo}>
                         <ExternalLink className="w-4 h-4 mr-2" />
                         Demo
                       </a>
                     </Button>
-                    <Button variant="outline" size="sm" onClick={() => shareProject(project)}>
+                    <Button variant="outline" size="sm" onClick={() => shareProject(project)} className="bg-gray-800 text-gray-200 hover:bg-gray-700">
                       <Share2 className="w-4 h-4 mr-2" />
                       Share
                     </Button>
-                    <Button variant="default" size="sm" asChild>
+                    <Button variant="default" size="sm" asChild className="bg-cyan-500 text-white hover:bg-cyan-600">
                       <Link href={project.link}>
                         Learn More
                       </Link>
