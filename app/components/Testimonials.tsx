@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
 import { Quote } from 'lucide-react'
 
 const testimonials = [
@@ -42,16 +41,16 @@ export default function Testimonials() {
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="h-full bg-gray-900 border-gray-700">
-                <CardContent className="p-6 flex flex-col h-full">
+              <div className="h-full bg-[#0B1120] border border-gray-800">
+                <div className="p-6 flex flex-col h-full">
                   <Quote className="w-10 h-10 text-cyan-500 mb-4" />
                   <p className="text-gray-300 mb-4 flex-grow">{testimonial.quote}</p>
                   <div>
                     <p className="font-semibold">{testimonial.author}</p>
                     <p className="text-sm text-gray-400">{testimonial.title}</p>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
