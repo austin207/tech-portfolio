@@ -1,7 +1,6 @@
 'use client'
 
 import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
 import { Briefcase, GraduationCap, Award } from 'lucide-react'
 
 const timelineEvents = [
@@ -50,7 +49,6 @@ export default function Timeline() {
           Career Timeline
         </motion.h2>
         <div className="relative">
-          {/* Vertical line */}
           <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-cyan-500" />
           
           {timelineEvents.map((event, index) => (
@@ -64,18 +62,18 @@ export default function Timeline() {
               transition={{ duration: 0.5, delay: index * 0.1 }}
             >
               <div className="order-1 w-5/12" />
-              <div className="z-20 flex items-center order-1 bg-cyan-500 shadow-xl w-8 h-8 rounded-full">
+              <div className="z-20 flex items-center order-1 bg-cyan-500 shadow-xl w-8 h-8">
                 <h3 className="mx-auto font-semibold text-lg text-white">{event.year}</h3>
               </div>
-              <Card className="order-1 w-5/12 bg-gray-800/50 border-gray-700">
-                <CardContent className="p-4">
+              <div className="order-1 w-5/12 bg-[#0B1120] border border-gray-800">
+                <div className="p-4">
                   <div className="flex items-center mb-2">
                     <event.icon className="w-5 h-5 mr-2 text-cyan-500" />
                     <h3 className="font-bold text-lg">{event.title}</h3>
                   </div>
                   <p className="text-sm text-gray-400">{event.description}</p>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
           ))}
         </div>
