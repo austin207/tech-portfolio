@@ -2,12 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { Card, CardContent } from '@/components/ui/card'
-import { Button } from '@/components/ui/button'
 import { Download } from 'lucide-react'
 
-const aboutMeText = `
-Hello! I'm a passionate Robotics and VLSI Engineer with a keen interest in embedded systems and hardware design. 
+const aboutMeText = `Hello! I'm a passionate Robotics and VLSI Engineer with a keen interest in embedded systems and hardware design. 
 My journey in the world of technology began with a fascination for how things work at their most fundamental level. 
 This curiosity led me to pursue a career at the intersection of hardware and software, where I continuously strive 
 to push the boundaries of what's possible.
@@ -20,8 +17,7 @@ When I'm not tinkering with circuits or coding embedded systems, you can find me
 in robotics or contributing to open-source projects. I believe in the power of technology to solve real-world problems 
 and am always excited to take on new challenges that allow me to grow and learn.
 
-Let's connect and explore how we can create amazing tech solutions together!
-`
+Let's connect and explore how we can create amazing tech solutions together!`
 
 const downloadableAssets = [
   { name: 'Resume', url: '/path-to-your-resume.pdf' },
@@ -37,7 +33,7 @@ export default function AboutMe() {
       const timer = setTimeout(() => {
         setDisplayedText(prevText => prevText + aboutMeText[currentIndex])
         setCurrentIndex(prevIndex => prevIndex + 1)
-      }, 20) // Adjust the speed of typing here
+      }, 20)
 
       return () => clearTimeout(timer)
     }
@@ -54,20 +50,18 @@ export default function AboutMe() {
         >
           About Me
         </motion.h2>
-        <Card className="bg-gray-800/50 border-gray-700 mb-8">
-          <CardContent className="p-6">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.5 }}
-            >
-              <p className="text-gray-300 whitespace-pre-wrap">{displayedText}</p>
-              {currentIndex < aboutMeText.length && (
-                <span className="inline-block w-1 h-6 ml-1 bg-cyan-500 animate-blink"></span>
-              )}
-            </motion.div>
-          </CardContent>
-        </Card>
+        <div className="bg-[#0B1120] border border-gray-800 p-6 mb-8">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ duration: 0.5 }}
+          >
+            <p className="text-gray-300 whitespace-pre-wrap">{displayedText}</p>
+            {currentIndex < aboutMeText.length && (
+              <span className="inline-block w-1 h-6 ml-1 bg-cyan-500 animate-blink"></span>
+            )}
+          </motion.div>
+        </div>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -76,16 +70,14 @@ export default function AboutMe() {
           <h3 className="text-2xl font-bold mb-4">Downloadable Assets</h3>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {downloadableAssets.map((asset, index) => (
-              <Button
+              <a
                 key={asset.name}
-                variant="outline"
-                className="w-full"
-                asChild
+                href={asset.url}
+                download
+                className="bg-[#0B1120] border border-gray-800 p-4 text-center hover:bg-gray-800 transition-colors flex items-center justify-center"
               >
-                <a href={asset.url} download>
-                  <Download className="mr-2 h-4 w-4" /> {asset.name}
-                </a>
-              </Button>
+                <Download className="mr-2 h-4 w-4" /> {asset.name}
+              </a>
             ))}
           </div>
         </motion.div>
