@@ -1,22 +1,32 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { MessageCircle, X, Send } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent, CardFooter, CardHeader } from '@/components/ui/card'
 import { Input } from '@/components/ui/input'
 
+interface Message {
+  text: string
+  isUser: boolean
+}
+
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false)
-  const [messages, setMessages] = useState<{ text: string; isUser: boolean }[]>([
+  const [messages, setMessages] = useState<Message[]>([
     { text: "Hello! How can I help you today?", isUser: false }
   ])
   const [input, setInput] = useState('')
   const [isTyping, setIsTyping] = useState(false)
+  const messagesEndRef = useRef<HTMLDivElement>(null)
   const [displayedResponse, setDisplayedResponse] = useState('')
   const [currentResponseIndex, setCurrentResponseIndex] = useState(0)
   const [currentResponse, setCurrentResponse] = useState('')
+
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+  }, [messages])
 
   useEffect(() => {
     if (isTyping && currentResponseIndex < currentResponse.length) {
@@ -28,24 +38,49 @@ export default function Chatbot() {
       return () => clearTimeout(timer)
     } else if (currentResponseIndex === currentResponse.length) {
       setIsTyping(false)
+      setMessages(prev => [...prev, { text: currentResponse, isUser: false }])
     }
   }, [isTyping, currentResponseIndex, currentResponse])
 
-  const handleSend = () => {
+  const handleSend = async () => {
     if (input.trim()) {
-      setMessages([...messages, { text: input, isUser: true }])
+      const userMessage = { text: input, isUser: true }
+      setMessages(prev => [...prev, userMessage])
       setInput('')
       setIsTyping(true)
-      setDisplayedResponse('')
-      setCurrentResponseIndex(0)
-      
-      // Simulate bot response
-      const botResponse = "Thanks for your message! I'm a demo chatbot, so I can't provide real answers. But on a real site, this is where you'd get a helpful response!"
-      setCurrentResponse(botResponse)
-      
-      setTimeout(() => {
-        setMessages(prev => [...prev, { text: botResponse, isUser: false }])
-      }, botResponse.length * 20 + 500) // Add a small delay after typing finishes
+
+      try {
+        const response = await fetch('/api/chat', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            messages: [
+              ...messages.map(msg => ({
+                role: msg.isUser ? 'user' : 'assistant',
+                content: msg.text
+              })),
+              { role: 'user', content: userMessage.text }
+            ]
+          }),
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch response')
+        }
+
+        const data = await response.json()
+        setCurrentResponse(data.reply.content)
+        setDisplayedResponse('')
+        setCurrentResponseIndex(0)
+        setIsTyping(true)
+      } catch (error) {
+        console.error('Error in chat:', error)
+        setMessages(prev => [...prev, { text: "I'm sorry, I encountered an error. Please try again later.", isUser: false }])
+      } finally {
+        setIsTyping(false)
+      }
     }
   }
 
@@ -77,18 +112,12 @@ export default function Chatbot() {
                 {isTyping && (
                   <div className="text-left mb-2">
                     <span className="inline-block p-2 rounded-lg bg-gray-700 text-gray-200">
-                      {displayedResponse}
-                      <motion.span
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ repeat: Infinity, duration: 0.8, ease: "easeInOut" }}
-                      >
-                        |
-                      </motion.span>
+                      <span>{displayedResponse}</span>
+                      <span className="inline-block w-1 h-4 ml-1 bg-cyan-500 animate-blink"></span>
                     </span>
                   </div>
                 )}
+                <div ref={messagesEndRef} />
               </CardContent>
               <CardFooter>
                 <form onSubmit={(e) => { e.preventDefault(); handleSend(); }} className="flex w-full gap-2">
